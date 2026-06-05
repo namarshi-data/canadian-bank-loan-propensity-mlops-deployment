@@ -58,31 +58,31 @@ The dataset consists of 5,000 customer records merged from two source files cont
 ## Project Workflow
 
 Raw Data
-↓
+→
 Data Cleaning
-↓
+→
 EDA & Statistical Analysis
-↓
+→
 Feature Engineering
-↓
+→
 Class Imbalance Handling
-↓
+→
 Model Development
-↓
+→
 Hyperparameter Tuning
-↓
+→
 Model Comparison
-↓
+→
 Final Model Selection
-↓
+→
 Model Serialization
-↓
+→
 Flask API
-↓
+→
 Docker Containerization
-↓
+→
 AWS Deployment (EKS)
-↓
+→
 CI/CD Automation
 
 
@@ -107,7 +107,7 @@ The following statistical techniques were applied:
 
 ### Numerical Variables
 
-- Mann–Whitney U Test
+- Mann-Whitney U Test
 
 ### Categorical Variables
 
@@ -213,19 +213,19 @@ The solution enables Bank XYZ to:
   ## MLOps Architecture
 
 GitHub
-↓
+→
 AWS CodePipeline
-↓
+→
 AWS CodeBuild
-↓
+→
 Docker Image Build
-↓
+→
 Amazon ECR
-↓
+→
 Amazon EKS
-↓
+→
 Flask API
-↓
+→
 Loan Propensity Predictions
 
 
