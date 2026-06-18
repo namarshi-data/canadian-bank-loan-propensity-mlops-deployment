@@ -8,32 +8,6 @@ The project is designed as a finance and data science portfolio project for Cana
 
 ---
 
-## GitHub About
-
-Banking ML project predicting personal loan propensity with Python, feature engineering, model evaluation, Flask API, Docker, Kubernetes, Terraform, and CI-ready MLOps templates.
-
-## Suggested GitHub Topics
-
-```text
-machine-learning
-data-science
-banking-analytics
-loan-propensity
-classification-model
-python
-scikit-learn
-flask-api
-docker
-kubernetes
-terraform
-mlops
-aws
-model-evaluation
-portfolio-project
-```
-
----
-
 ## Business Problem
 
 Retail banks need to prioritize customers who are most likely to respond to loan campaigns. Broad campaigns can increase marketing costs, reduce customer experience, and waste sales capacity by targeting customers with low likelihood of conversion.
