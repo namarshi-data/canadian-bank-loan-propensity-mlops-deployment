@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bank-loan-propensity-api
+  labels:
+    app: bank-loan-propensity-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bank-loan-propensity-api
+  template:
+    metadata:
+      labels:
+        app: bank-loan-propensity-api
+    spec:
+      containers:
+        - name: bank-loan-propensity-api
+          image: <aws-account-id>.dkr.ecr.<aws-region>.amazonaws.com/bank-loan-propensity-api:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"

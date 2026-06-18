@@ -6,14 +6,12 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 DATA_DIR = PROJECT_ROOT / "data"
 RAW_DATA_DIR = DATA_DIR / "raw"
-INTERIM_DATA_DIR = DATA_DIR / "interim"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
-MODEL_DIR = PROJECT_ROOT / "models"
-REPORTS_DIR = PROJECT_ROOT / "reports"
+MODEL_DIR = PROJECT_ROOT / "flask_app" / "model"
 
 RAW_DATA_1 = RAW_DATA_DIR / "Data1.csv"
 RAW_DATA_2 = RAW_DATA_DIR / "Data2.csv"
-MERGED_DATA_PATH = INTERIM_DATA_DIR / "01_merged_customer_data.csv"
+MERGED_DATA_PATH = PROCESSED_DATA_DIR / "01_merged_customer_data.csv"
 CLEANED_DATA_PATH = PROCESSED_DATA_DIR / "02_cleaned_customer_data.csv"
 TRAIN_DATA_PATH = PROCESSED_DATA_DIR / "03_train_data.csv"
 TEST_DATA_PATH = PROCESSED_DATA_DIR / "03_test_data.csv"
