@@ -1,45 +1,39 @@
 ## Bank Loan Propensity Prediction & AWS MLOps Deployment
 
-Finance-focused machine learning and MLOps project that predicts high-propensity loan customers and deploys a scalable prediction API on AWS using Flask, Docker, Kubernetes, Terraform, Amazon EKS, Amazon ECR, and AWS CI/CD services.
+End-to-end machine learning and deployment-ready MLOps project that predicts high-propensity banking customers for loan campaign targeting. The project combines data cleaning, exploratory analysis, statistical review, feature engineering, classification modelling, model selection, Flask API development, Docker containerization, Kubernetes manifests, Terraform templates, and CI workflow design.
 
 ---
 
 ## Executive Summary
 
-I built an end-to-end machine learning and MLOps solution to identify banking customers who are most likely to accept a loan offer. The project supports targeted marketing by helping a retail bank prioritize high-propensity customers, reduce unnecessary campaign spend, and improve return on marketing investment.
+I developed a finance-focused machine learning project to identify retail banking customers who are most likely to accept a loan offer. The goal is to help a bank improve campaign targeting, reduce unnecessary outreach, and prioritize customers with stronger loan acceptance probability.
 
-The project covers the full machine learning lifecycle:
+The project is designed to reflect the workflow expected in Canadian banking and finance analytics roles: business problem framing, data quality review, exploratory analysis, model development, model evaluation, business interpretation, and deployment readiness.
 
-- Business problem framing
-- Data cleaning and exploratory analysis
-- Statistical testing and feature engineering
-- Model training and comparison
-- Class imbalance handling
-- Hyperparameter tuning
-- Final model selection
-- Flask API development
-- Docker containerization
-- Kubernetes deployment on Amazon EKS
-- Infrastructure provisioning using Terraform
-- CI/CD automation using AWS CodePipeline and CodeBuild
-
-After evaluating more than 20 model variations, a tuned Hist Gradient Boosting model was selected as the final production candidate because it delivered the strongest balance of precision, recall, F1 score, and business usability.
+After comparing multiple classification models and model variants, a tuned Hist Gradient Boosting model was selected as the final champion model because it provided the strongest balance of precision, recall, F1 score, ROC-AUC, and business usability.
 
 ---
 
 ## Business Problem
 
-### Objective
+Retail banks often run targeted campaigns to promote loan products. Sending offers to every customer can increase marketing costs, reduce campaign efficiency, and create unnecessary customer outreach.
 
-Identify customers with the highest probability of accepting a loan offer so the bank can improve campaign targeting, reduce unnecessary outreach, and increase marketing return on investment.
+This project answers the question:
+
+> Which customers are most likely to accept a loan offer, and how can the bank prioritize them for targeted campaign outreach?
+
+### Business Objective
+
+Build a machine learning model that predicts whether a customer is likely to accept a loan offer using customer-level banking and demographic features.
 
 ### Business Value
 
-- Improve loan campaign conversion rates
-- Reduce customer acquisition cost
+- Improve loan campaign targeting
 - Reduce unnecessary marketing spend
-- Support data-driven customer segmentation
-- Enable scalable prediction through an API-based deployment pattern
+- Increase return on marketing investment
+- Support customer segmentation
+- Provide a repeatable scoring pipeline
+- Enable API-based model serving for future deployment
 
 ---
 
@@ -129,22 +123,6 @@ Customers were more likely to accept loan offers when they:
 - Held fixed deposit accounts with the bank
 
 These insights can help marketing and product teams design more targeted loan campaigns.
-
----
-
-## Target Roles This Project Supports
-
-This project was structured to reflect skills commonly requested in Canadian banking and finance analytics roles:
-
-| Target role | Project evidence |
-|---|---|
-| Python analytics | End-to-end notebooks and reusable `src/` pipeline |
-| Statistical analysis | EDA, distribution review, categorical analysis, and model interpretation |
-| Credit / banking context | Customer-level loan propensity and campaign targeting use case |
-| Machine learning | Multiple classification models, tuning, and model selection |
-| Model evaluation | Precision, recall, F1, ROC-AUC, confusion matrix, false-positive/false-negative analysis |
-| MLOps readiness | Flask API, Dockerfile, Kubernetes manifests, Terraform templates, CI workflow |
-| Business communication | README explains model results in banking and campaign terms |
 
 ---
 
@@ -295,6 +273,22 @@ Key validation considerations included:
 - Production-readiness through API deployment and containerization
 
 In a real banking environment, this model would require additional validation before production use, including fairness testing, data drift monitoring, model-performance monitoring, approval workflows, and periodic retraining.
+
+---
+
+## Important Risk Note
+
+The model achieved very strong results on the available dataset. In a real banking environment, this would require additional validation before production use, including:
+
+- Out-of-time validation
+- Fairness and bias testing
+- Data drift monitoring
+- Model performance monitoring
+- Model approval workflow
+- Periodic recalibration or retraining
+- Documentation for model risk management
+
+This project is a demonstration and should not be treated as a production banking model without further validation.
 
 ---
 
@@ -669,6 +663,22 @@ A typical workflow would be:
 - Terraform infrastructure provisioning
 - CI/CD pipeline design
 - Cloud-native ML deployment
+
+---
+
+## Target Roles This Project Supports
+
+This project was structured to reflect skills commonly requested in Canadian banking and finance analytics roles:
+
+| Target role | Project evidence |
+|---|---|
+| Python analytics | End-to-end notebooks and reusable `src/` pipeline |
+| Statistical analysis | EDA, distribution review, categorical analysis, and model interpretation |
+| Credit / banking context | Customer-level loan propensity and campaign targeting use case |
+| Machine learning | Multiple classification models, tuning, and model selection |
+| Model evaluation | Precision, recall, F1, ROC-AUC, confusion matrix, false-positive/false-negative analysis |
+| MLOps readiness | Flask API, Dockerfile, Kubernetes manifests, Terraform templates, CI workflow |
+| Business communication | README explains model results in banking and campaign terms |
 
 ---
 
