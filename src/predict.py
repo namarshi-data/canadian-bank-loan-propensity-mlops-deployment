@@ -1,4 +1,4 @@
-"""Production-style prediction utilities for loan propensity scoring."""
+"""Prediction utilities for customer-level loan propensity scoring."""
 
 from __future__ import annotations
 
@@ -7,31 +7,45 @@ from pathlib import Path
 import joblib
 import pandas as pd
 
-from src.config import FEATURE_NAMES_PATH, MODEL_PATH
+from src.config import (
+    DEFAULT_CLASSIFICATION_THRESHOLD,
+    FEATURE_NAMES_PATH,
+    MODEL_PATH,
+    THRESHOLD_PATH,
+)
+from src.feature_engineering import engineer_customer_features
 
 
 def load_artifacts(
     model_path: str | Path = MODEL_PATH,
     feature_names_path: str | Path = FEATURE_NAMES_PATH,
+    threshold_path: str | Path = THRESHOLD_PATH,
 ):
-    """Load trained model and feature names from disk."""
+    """Load trained model, feature names, and classification threshold."""
     model_path = Path(model_path)
     feature_names_path = Path(feature_names_path)
+    threshold_path = Path(threshold_path)
 
     if not model_path.exists():
         raise FileNotFoundError(f"Model artifact not found: {model_path}")
-
     if not feature_names_path.exists():
         raise FileNotFoundError(f"Feature names artifact not found: {feature_names_path}")
 
     model = joblib.load(model_path)
     feature_names = joblib.load(feature_names_path)
+    threshold = (
+        joblib.load(threshold_path)
+        if threshold_path.exists()
+        else DEFAULT_CLASSIFICATION_THRESHOLD
+    )
+    return model, feature_names, float(threshold)
 
-    return model, feature_names
 
-
-def prepare_customer_input(customer_data: dict | pd.DataFrame, feature_names: list[str]) -> pd.DataFrame:
-    """Validate and order customer input for model prediction."""
+def prepare_customer_input(
+    customer_data: dict | pd.DataFrame,
+    feature_names: list[str],
+) -> pd.DataFrame:
+    """Validate, feature-engineer, and order customer input for prediction."""
     if isinstance(customer_data, dict):
         customer_df = pd.DataFrame([customer_data])
     elif isinstance(customer_data, pd.DataFrame):
@@ -39,36 +53,60 @@ def prepare_customer_input(customer_data: dict | pd.DataFrame, feature_names: li
     else:
         raise TypeError("customer_data must be a dictionary or pandas DataFrame.")
 
-    missing_features = [feature for feature in feature_names if feature not in customer_df.columns]
+    customer_features = engineer_customer_features(customer_df)
 
+    missing_features = [
+        feature for feature in feature_names if feature not in customer_features.columns
+    ]
     if missing_features:
         raise ValueError(f"Missing required features: {missing_features}")
 
-    return customer_df[feature_names].copy()
+    return customer_features[feature_names].copy()
+
+
+def classify_probability(probability: float, threshold: float) -> int:
+    """Convert a probability score into a binary decision."""
+    return int(probability >= threshold)
 
 
 def predict_customer(
     customer_data: dict | pd.DataFrame,
     model_path: str | Path = MODEL_PATH,
     feature_names_path: str | Path = FEATURE_NAMES_PATH,
+    threshold_path: str | Path = THRESHOLD_PATH,
 ) -> dict:
     """Predict loan propensity for one or more customer records."""
-    model, feature_names = load_artifacts(model_path, feature_names_path)
-    customer_df = prepare_customer_input(customer_data, feature_names)
+    model, feature_names, threshold = load_artifacts(
+        model_path=model_path,
+        feature_names_path=feature_names_path,
+        threshold_path=threshold_path,
+    )
+    customer_features = prepare_customer_input(customer_data, feature_names)
 
-    predictions = model.predict(customer_df)
-    probabilities = model.predict_proba(customer_df)[:, 1]
+    probabilities = model.predict_proba(customer_features)[:, 1]
+    predictions = [
+        classify_probability(float(probability), threshold)
+        for probability in probabilities
+    ]
 
     if len(predictions) == 1:
+        prediction = predictions[0]
+        probability = round(float(probabilities[0]), 4)
         return {
-            "prediction": int(predictions[0]),
-            "loan_acceptance_probability": round(float(probabilities[0]), 4),
-            "propensity_label": "High Propensity" if predictions[0] == 1 else "Low Propensity",
+            "prediction": prediction,
+            "loan_acceptance_probability": probability,
+            "propensity_label": (
+                "High Propensity" if prediction == 1 else "Low Propensity"
+            ),
+            "classification_threshold": threshold,
         }
 
     return {
-        "predictions": predictions.astype(int).tolist(),
-        "loan_acceptance_probabilities": [round(float(prob), 4) for prob in probabilities],
+        "predictions": predictions,
+        "loan_acceptance_probabilities": [
+            round(float(probability), 4) for probability in probabilities
+        ],
+        "classification_threshold": threshold,
     }
 
 
@@ -87,5 +125,4 @@ if __name__ == "__main__":
         "CreditCard": 1,
     }
 
-    result = predict_customer(sample_customer)
-    print(result)
+    print(predict_customer(sample_customer))

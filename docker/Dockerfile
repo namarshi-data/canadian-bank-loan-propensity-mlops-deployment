@@ -1,16 +1,13 @@
 FROM python:3.11-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
-
 WORKDIR /app
 
-COPY requirements.txt /app/requirements.txt
+COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir -r /app/requirements.txt
+    && pip install --no-cache-dir -r requirements.txt
 
-COPY src /app/src
-COPY flask_app /app/flask_app
+COPY src/ src/
+COPY flask_app/ flask_app/
 
 EXPOSE 5000
 

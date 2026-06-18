@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: bank-loan-propensity-api
-          image: <aws-account-id>.dkr.ecr.<aws-region>.amazonaws.com/bank-loan-propensity-api:latest
+          image: <aws-account-id>.dkr.ecr.ca-central-1.amazonaws.com/bank-loan-propensity-api:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
@@ -35,7 +35,7 @@ spec:
           resources:
             requests:
               cpu: "250m"
-              memory: "512Mi"
+              memory: "256Mi"
             limits:
               cpu: "500m"
-              memory: "1Gi"
+              memory: "512Mi"

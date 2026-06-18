@@ -1,3 +1,3 @@
-"""Reusable source package for the Bank Loan Propensity Prediction MLOps project."""
+"""Reusable source package for the bank loan propensity project."""
 
-__version__ = "1.0.0"
+__version__ = "2.0.0"

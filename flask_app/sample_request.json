@@ -1,0 +1,13 @@
+{
+  "Age": 45,
+  "CustomerSince": 20,
+  "HighestSpend": 67,
+  "MonthlyAverageSpend": 2.5,
+  "Mortgage": 0,
+  "Level": 2,
+  "HiddenScore": 3,
+  "Security": 0,
+  "FixedDepositAccount": 1,
+  "InternetBanking": 1,
+  "CreditCard": 1
+}

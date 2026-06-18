@@ -7,9 +7,9 @@ from pathlib import Path
 
 def ensure_directory(path: str | Path) -> Path:
     """Create a directory if it does not exist and return it as a Path."""
-    path = Path(path)
-    path.mkdir(parents=True, exist_ok=True)
-    return path
+    directory = Path(path)
+    directory.mkdir(parents=True, exist_ok=True)
+    return directory
 
 
 def format_percentage(value: float, decimals: int = 2) -> str:
